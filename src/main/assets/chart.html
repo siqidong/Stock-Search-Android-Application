@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="jquery-1.10.2.js"></script>
+    <script src="highstock.js"></script>
+    <script>
+function doit(response, symbol) {
+    var chartData = JSON.parse(response);
+    var dates = chartData.Dates || [];
+    var elements = chartData.Elements || [];
+    var stock = [];
+    if (elements[0]){
+        for (var i = 0, datLen = dates.length; i < datLen; i++) {
+
+            var predat = new Date( dates[i] );
+            var dat = Date.UTC(predat.getFullYear(), predat.getMonth(), predat.getDate());
+            var pointData = [dat,
+                            elements[0].DataSeries['open'].values[i],
+                            elements[0].DataSeries['high'].values[i],
+                            elements[0].DataSeries['low'].values[i],
+                            elements[0].DataSeries['close'].values[i]];
+            stock.push( pointData );
+        };
+    }
+
+    $('#content').highcharts('StockChart', {
+
+    rangeSelector : {
+        buttons: [{type: 'week',count: 1,text: '1w'},
+                  {type: 'month',count: 1,text: '1m'},
+                  {type: 'month',count: 3,text: '3m'},
+                  {type: 'month',count: 6,text: '6m'},
+                  {type: 'ytd',text: 'YTD'},
+                  {type: 'year',count: 1,text: '1y'},
+                  {type: 'all',text: 'All'}],
+        selected : 0,
+        inputEnabled: false
+    },
+    exporting: {
+        enabled: false
+    },
+    title : {
+        text : symbol + ' Stock Value'
+    },
+    yAxis: [{
+        title: {
+            text: 'Stock Value'
+        },
+        height: 200,
+        lineWidth: 2
+    }],
+    series : [{
+        type : 'area',
+        name : symbol,
+        data : stock,
+        threshold : null,
+        tooltip: {
+        valueDecimals: 2,
+        valuePrefix: '$'
+        },
+        fillColor : {
+            linearGradient : {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 1
+            },
+            stops : [
+                [0, Highcharts.getOptions().colors[0]],
+                [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+            ]
+        }
+        }]
+    });
+}
+</script>
+</head>
+<body onload="doit()">
+<div id="content"></div>
+<noscript/>
+</body>
+</html>
+

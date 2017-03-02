@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#37474F"
+    android:elevation="4dp"
+    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+    >
+
+    <ImageButton
+        android:id="@+id/fbButton"
+        android:layout_width="35sp"
+        android:layout_height="35sp"
+        android:src="@drawable/fb"
+        android:layout_gravity="right"
+        android:layout_marginRight="20dp" />
+
+    <ToggleButton
+        android:id="@+id/starButton"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:layout_gravity="right"
+        android:background="@drawable/check"
+        android:layout_marginRight="20dp"
+        android:textOff=""
+        android:textOn="" />
+</android.support.v7.widget.Toolbar>
